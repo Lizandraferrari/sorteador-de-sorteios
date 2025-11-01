@@ -13,7 +13,7 @@ def parabainx(nome , premio):
 		with open(f"resultado_sorteio{data}.txt", "w", encoding="utf-8") as bloquinho:
 		    for i in range(len(vencedores)):
 		        bloquinho.write(f"O {i + 1}º prêmio: {premios[i]} vai para {vencedores[i].upper()}\n")
-		print(f"\nArquivo 'resultado_sorteio{data}.txt' criado com sucesso!\n")
+		print(f"\nArquivo com vencedores 'resultado_sorteio{data}.txt' criado com sucesso!\n")
 		print("\nFINALMENTE ACABO ESSA PORRA\n")
 	except Exception as e:
 		print("Algo de errado não está certo... Não consegui criar o arquivo .txt")
@@ -26,7 +26,6 @@ def suspense():
 	for i in range(3 , 0 , -1):
 		sleep(1)
 		print(f'	{i}...')
-		sleep(1)
 		
 def linha():
 	sleep(0.5)
@@ -44,6 +43,19 @@ def insereDados(tipo):
 			lista.append(entrada.capitalize())
 			print()
 	linha()
+	qtd = len(lista)
+	print(f'Vc colocou {qtd} {tipo}s:')
+	opc = ''
+	while opc != 'S' and opc != 'N':
+		opc = input('Quer verificar oq vc botou? Se sim digite S e se não digite N\n').upper()
+	if opc == 'S':
+		for i in range(qtd):
+			print(f'{tipo.capitalize()} {i + 1}: {lista[i]}')
+			sleep(0.5)
+		desaprovou = input(f'Se os {tipo}s digitados estiverem errados, digite qualquer coisa. Se não é só dar enter\n')
+		if desaprovou: 
+			print('           Então faz direito ai\n')
+			insereDados(tipo)
 	return lista
 
 ######################################################################################
@@ -52,7 +64,9 @@ print('\nSorteador de sorteios da D.S.T Noise!!!!!!!!!!!!!!!!!!!!!!')
 linha()
 
 premios = insereDados('prêmio')
+linha()
 listaNomes = insereDados('nome')
+
 
 #bloco q so tem logica
 quantidadeSorteada = len(premios)
