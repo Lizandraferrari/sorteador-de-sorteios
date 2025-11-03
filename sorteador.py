@@ -5,14 +5,14 @@ from datetime import datetime
 def parabainx(nome , premio):
 	for i in range(len(premio)):
 		print(f'{nome[i]} vai ficar com o prêmio: {premio[i]}')
-		sleep(1.5)
+		sleep(1)
 	
 	data = datetime.now()
 	data = data.strftime("%d-%m-%Y_%H-%M")
 	try:
 		with open(f"resultado_sorteio{data}.txt", "w", encoding="utf-8") as bloquinho:
-		    for i in range(len(vencedores)):
-		        bloquinho.write(f"O {i + 1}º prêmio: {premios[i]} vai para {vencedores[i].upper()}\n")
+		    for i in range(len(nome)):
+		        bloquinho.write(f"O {i + 1}º prêmio: {premio[i]} vai para {nome[i].upper()}\n")
 		print(f"\nArquivo com vencedores 'resultado_sorteio{data}.txt' criado com sucesso!\n")
 		print("\nFINALMENTE ACABO ESSA PORRA\n")
 	except Exception as e:
@@ -47,7 +47,7 @@ def insereDados(tipo):
 	print(f'Vc colocou {qtd} {tipo}s:')
 	opc = ''
 	while opc != 'S' and opc != 'N':
-		opc = input('Quer verificar oq vc botou? Se sim digite S e se não digite N\n').upper()
+		opc = input('Quer verificar oq vc botou? Se sim digite S e se não digite N (s/n)\n').upper()
 	if opc == 'S':
 		for i in range(qtd):
 			print(f'{tipo.capitalize()} {i + 1}: {lista[i]}')
@@ -60,30 +60,30 @@ def insereDados(tipo):
 
 ######################################################################################
 
-print('\nSorteador de sorteios da D.S.T Noise!!!!!!!!!!!!!!!!!!!!!!')
-linha()
+def main():
+	print('\nSorteador de sorteios da D.S.T Noise!!!!!!!!!!!!!!!!!!!!!!')
+	linha()
 
-premios = insereDados('prêmio')
-linha()
-listaNomes = insereDados('nome')
+	premios = insereDados('prêmio')
+	linha()
+	listaNomes = insereDados('nome')
 
+	#bloco q so tem logica
+	quantidadeSorteada = len(premios)
+	vencedores = []
+	for i in range(quantidadeSorteada):
+		sorteado = choice(listaNomes)
+		vencedores.append(sorteado)
+		listaNomes.remove(sorteado)
 
-#bloco q so tem logica
-quantidadeSorteada = len(premios)
-vencedores = []
-for i in range(quantidadeSorteada):
-	sorteado = choice(listaNomes)
-	vencedores.append(sorteado)
-	listaNomes.remove(sorteado)
+	for i in range(quantidadeSorteada):
+		print(f'O { i + 1 }º premio: { premios[i] } vai para...')
+		suspense()
+		print(f'Parabéns pelo prêmio, { vencedores[i].upper() }!')
+		if i != quantidadeSorteada - 1:
+			input('\n**********Tecle enter para sortear o próximo**********\n')
+	linha()	
 
-for i in range(quantidadeSorteada):
-	print(f'O { i + 1 }º premio: { premios[i] } vai para...')
-	suspense()
-	print(f'Parabéns pelo prêmio, { vencedores[i].upper() }!')
-	if i != quantidadeSorteada - 1:
-		input('\n**********Tecle enter para sortear o próximo**********\n')
-linha()	
+	parabainx(vencedores , premios)
 
-parabainx(vencedores , premios)
-
-
+main()
